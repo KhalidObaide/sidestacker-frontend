@@ -29,3 +29,26 @@ export enum CellType {
     InsertRight='right',
     Cell='generic'
 }
+
+export enum GameStatus {
+    Disconnected=-1,
+    Waiting=0,
+    Player1Turn=1,
+    Player2Turn=2,
+    Player1Won=3,
+    Player2Won=4,
+    Draw=5,
+    Cancelled=6
+}
+
+export interface Game {
+    status: GameStatus;
+    game_id: number,
+    player: Player;
+}
+
+const ReadyStatuses: GameStatus[] = [
+      GameStatus.Disconnected, GameStatus.Player1Won,
+      GameStatus.Player2Won, GameStatus.Draw, GameStatus.Cancelled
+];
+export { ReadyStatuses };

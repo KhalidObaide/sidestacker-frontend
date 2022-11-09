@@ -1,13 +1,24 @@
 import React from 'react';
 import Cell from './Cell';
-import {CellPosition, CellState, CellType, Player, Direction, ErrorCase} from '../structures';
+import {
+    CellPosition,
+    CellState,
+    CellType,
+    Player,
+    Direction,
+    ErrorCase,
+    Game,
+    GameStatus,
+    ReadyStatuses
+} from '../structures';
 
 interface BoardProps {
     rows: number;
     columns: number;
+    game: Game
 }
 function Board(boardProps: BoardProps) {
-  const { rows, columns } = boardProps;
+  const { rows, columns, game } = boardProps;
 
   // initial setup
   const setupBoard = () => {
@@ -31,6 +42,7 @@ function Board(boardProps: BoardProps) {
       return { row, column };
   }
   const makeMove = (board: number[][], row: number, direction: Direction) => {
+      if ( [...ReadyStatuses, GameStatus.Waiting].includes(game.status) ) return;
       const spot = findSpot(board, row, direction);
       if ( spot === ErrorCase.SpotTaken || spot === ErrorCase.InvalidRow) return
       board[spot.row][spot.column] = player;
@@ -39,7 +51,8 @@ function Board(boardProps: BoardProps) {
   }
 
   return (
-    <div className="board">
+    <div className={"board " + ( [...ReadyStatuses, GameStatus.Waiting].includes(game.status) ? "disabled" : "")}>
+      { game.status }
         {masterBoard.map((row, rowIndex) => (
             <div className="row" key={rowIndex}>
                 <div onClick={() => makeMove(masterBoard, rowIndex, Direction.Right)}>

@@ -13,8 +13,25 @@ body {
 .App {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items:center;
     justify-content: center;
+    gap: 1rem;
+}
+
+.cta {
+    background-color: #61dafb;
+    color: #282c34;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.cta.negative {
+    background-color: #ff5555;
 }
 
 .user-information {
@@ -42,6 +59,10 @@ body {
     cursor: pointer;
 }
 
+.board.disabled {
+    opacity: 0.5;
+}
+
 .board .row{
     display: flex;
     justify-content: center;
@@ -63,6 +84,10 @@ body {
 .board .cell.insert:hover {
     background-color: lightgreen;
     cursor: pointer;
+}
+.board.disabled .cell.insert:hover {
+    background-color: #282c34;
+    cursor: not-allowed;
 }
 .board .cell.insert.left { border-right: none }
 .board .cell.insert.right { border-left: none }
