@@ -1,13 +1,81 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #282c34;
+  color: white;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.App {
+    height: 100vh;
+    display: flex;
+    align-items:center;
+    justify-content: center;
 }
+
+.user-information {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.user-information .fullname {
+    border: 2px solid lightgreen;
+    padding: 10px 5px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    outline: none;
+}
+
+.user-information .submit {
+    border: 1px solid gray;
+    padding: 10px 5px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    background-color: lightgreen;
+    color: green;
+    cursor: pointer;
+}
+
+.board .row{
+    display: flex;
+    justify-content: center;
+}
+
+.board .cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 1px solid white;
+}
+
+.board .cell.insert {
+    width: 50px;
+    background-color: #282c34;
+}
+.board .cell.insert:hover {
+    background-color: lightgreen;
+    cursor: pointer;
+}
+.board .cell.insert.left { border-right: none }
+.board .cell.insert.right { border-left: none }
+
+.board .cell-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #282c34;
+    font-size: 24px;
+    color: red;
+}
+.board .cell-circle.player1 { background-color: red }
+.board .cell-circle.player2 { background-color: blue }
+
+
