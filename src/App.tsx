@@ -1,9 +1,8 @@
 import React from 'react';
 import { useRef } from 'react';
 import io from 'socket.io-client';
-import { Socket } from 'socket.io-client';
 import Board from './components/Board';
-import {Game, GameStatus, ReadyStatuses, Direction} from './structures';
+import {Game, GameStatus, ReadyStatuses, Direction, StatusMessages} from './structures';
 
 const SOCKET_SERVER = 'http://192.168.1.106:5000';
 const socket = io(SOCKET_SERVER);
@@ -36,6 +35,7 @@ function App() {
 
   return (
     <div className="App">
+      <div>{ StatusMessages[game.status] }</div>
       {ReadyStatuses.includes(game.status) && (
         <button className="cta" onClick={matchGame}>Join Game</button>
       )}

@@ -41,6 +41,17 @@ export enum GameStatus {
     Cancelled=6
 }
 
+export const StatusMessages = {
+    [GameStatus.Disconnected]: 'Disconnected',
+    [GameStatus.Waiting]: 'Waiting for opponent',
+    [GameStatus.Player1Turn]: 'Player 1 ( Red ) Turn',
+    [GameStatus.Player2Turn]: 'Player 2 ( Blue ) Turn',
+    [GameStatus.Player1Won]: 'Player 1 ( Red ) Won',
+    [GameStatus.Player2Won]: 'Player 2 ( Blue ) Won',
+    [GameStatus.Draw]: 'Draw',
+    [GameStatus.Cancelled]: 'Cancelled'
+}
+
 export interface Game {
     status: GameStatus;
     game_id: number,
