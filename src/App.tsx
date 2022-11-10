@@ -10,7 +10,7 @@ import {
   StatusMessages,
 } from "./structures";
 
-const SOCKET_SERVER = "http://192.168.1.106:5000";
+const SOCKET_SERVER = "http://54.235.114.223:5000";
 const socket = io(SOCKET_SERVER);
 
 function App() {
