@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function UserInformation() {
-  const [fullname, setFullname] = React.useState<string>('');
+  const [fullname, setFullname] = React.useState<string>("");
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(fullname);
@@ -16,7 +16,9 @@ function UserInformation() {
         value={fullname}
         onChange={(event) => setFullname(event.target.value)}
       />
-      <button type="submit" className="submit">Update</button>
+      <button type="submit" className="submit">
+        Update
+      </button>
     </form>
   );
 }
