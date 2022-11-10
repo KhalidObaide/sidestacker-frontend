@@ -45,6 +45,7 @@ export interface Game {
     status: GameStatus;
     game_id: number,
     player: Player;
+    moves: string
 }
 
 const ReadyStatuses: GameStatus[] = [
