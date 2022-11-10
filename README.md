@@ -1,4 +1,7 @@
 # Siderstacker Frontend
+[Online Demo](https://khalidobaide.github.io/projects/sidestacker/)
+
+[Backend Repo](https://github.com/KhalidObaide/sidestacker-backend)
 
 ### Setup & Usage
 1. NPM packages ( `npm ci` )
