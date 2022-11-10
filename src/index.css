@@ -69,8 +69,8 @@ body {
 }
 
 .board .cell {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     display: flex;
     align-items: center;
     background-color: white;
