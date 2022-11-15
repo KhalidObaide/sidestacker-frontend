@@ -7,7 +7,7 @@ import {
   GameStatus,
   ReadyStatuses,
   Direction,
-  StatusMessages
+  StatusMessages,
 } from "./structures";
 
 const SOCKET_SERVER = "http://54.235.114.223:5000";
@@ -20,7 +20,7 @@ function App() {
   const [error, setError] = React.useState<string>("");
 
   React.useEffect(() => {
-      if ( error ) alert(error)
+    if (error) alert(error);
   }, [error]);
 
   const [game, setGame] = React.useState<Game>({
@@ -41,8 +41,8 @@ function App() {
   };
 
   socket.on("error", (error: string) => {
-      socket.disconnect();
-      setError(error);
+    socket.disconnect();
+    setError(error);
   });
 
   socket.on("game", (game: Game) => {
@@ -54,21 +54,23 @@ function App() {
 
   return (
     <div className="App">
-      <div>{StatusMessages[game.status]} | {game.game_id} </div>
+      <div>
+        {StatusMessages[game.status]} | {game.game_id}{" "}
+      </div>
       <div>
         <input
-            type="text"
-            value={fullname}
-            onChange={(e) => setFullname(e.target.value)}
-            className="input-basic"
-            placeholder="Fullname"
+          type="text"
+          value={fullname}
+          onChange={(e) => setFullname(e.target.value)}
+          className="input-basic"
+          placeholder="Fullname"
         />
         <input
-            type="number"
-            value={gameCode}
-            onChange={(e) => setGameCode(parseInt(e.target.value))}
-            className="input-basic"
-            placeholder="Game Code"
+          type="number"
+          value={gameCode}
+          onChange={(e) => setGameCode(parseInt(e.target.value))}
+          className="input-basic"
+          placeholder="Game Code"
         />
       </div>
       {ReadyStatuses.includes(game.status) && (
