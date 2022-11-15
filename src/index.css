@@ -41,12 +41,13 @@ body {
     gap: 10px;
 }
 
-.user-information .fullname {
+.input-basic {
     border: 2px solid lightgreen;
     padding: 10px 5px;
-    font-size: 1.5rem;
+    font-size: 1rem;
     border-radius: 5px;
     outline: none;
+    margin: 0px 10px;
 }
 
 .user-information .submit {
