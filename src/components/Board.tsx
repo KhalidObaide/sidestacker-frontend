@@ -36,9 +36,20 @@ const Board = forwardRef((props: BoardProps, ref) => {
     setupBoard()
   );
 
+
   // helper functions
   const resetMasterBoard = () => setMasterBoard(setupBoard());
-  useImperativeHandle(ref, () => ({ resetMasterBoard }));
+  const getMasterBoard = async () => {
+    return new Promise((resolve) => {
+        setMasterBoard((prev) => {
+            resolve(prev);
+            return prev;
+        });
+    });
+  };
+
+
+  useImperativeHandle(ref, () => ({ resetMasterBoard, getMasterBoard }));
   const findSpot = (
     board: CellState[][],
     row: number,
