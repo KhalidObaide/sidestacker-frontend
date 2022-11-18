@@ -92,16 +92,18 @@ function App() {
             if ( ReadyStatuses.includes(gameStatus) ) return
 
             if ( game.status === GameStatus.Player2Turn ) {
-                const move = Smart.findMove(updatedBoard);
-                makeMove(move.row, move.direction);
-                setGame((prev) => {
-                    const newMoves = prev.moves + move.direction.toString() + move.row.toString() + "/"
-                    return {
-                        ...prev,
-                        moves: newMoves,
-                        status: GameStatus.Player1Turn
-                    }
-                });
+                setTimeout(() => {
+                    const move = Smart.findMove(updatedBoard);
+                    makeMove(move.row, move.direction);
+                    setGame((prev) => {
+                        const newMoves = prev.moves + move.direction.toString() + move.row.toString() + "/"
+                        return {
+                            ...prev,
+                            moves: newMoves,
+                            status: GameStatus.Player1Turn
+                        }
+                    });
+                }, 0);
             }
         });
     }
@@ -124,6 +126,9 @@ function App() {
   return (
     <div className="App">
       <div>{StatusMessages[game.status]} | {game.game_id} </div>
+      { isSoloGame && game.status === GameStatus.Player2Turn && (
+            <div>Thinking...</div>
+      )}
       { !isSoloGame && (
         <div>
             <input
