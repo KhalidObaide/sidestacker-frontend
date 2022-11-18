@@ -8,7 +8,7 @@ import {
   ReadyStatuses,
   Direction,
   StatusMessages,
-  CellState
+  CellState,
 } from "./structures";
 import Smart from "./smart";
 import GameRules from "./gameRules";
@@ -35,25 +35,24 @@ function App() {
   });
 
   const startSolo = () => {
-      setGame({
-        status: GameStatus.Player1Turn,
-        game_id: 0,
-        player: 1,
-        moves: ""
-      });
-      setIsSoloGame(true);
-      boardRef.current.resetMasterBoard();
-  }
+    setGame({
+      status: GameStatus.Player1Turn,
+      game_id: 0,
+      player: 1,
+      moves: "",
+    });
+    setIsSoloGame(true);
+    boardRef.current.resetMasterBoard();
+  };
   const stopSolo = () => {
     setGame({
-        status: GameStatus.Disconnected,
-        game_id: 0,
-        player: 0,
-        moves: ""
+      status: GameStatus.Disconnected,
+      game_id: 0,
+      player: 0,
+      moves: "",
     });
     setIsSoloGame(false);
-  }
-
+  };
 
   const matchGame = () => {
     socket.connect();
@@ -62,54 +61,60 @@ function App() {
   };
   const leaveGame = () => socket.emit("leave");
   const makeMove = (row: number, direction: Direction) => {
-    if ( !isSoloGame ) {
-        socket.emit("move", { move: direction.toString() + row.toString() });
-        return
+    if (!isSoloGame) {
+      socket.emit("move", { move: direction.toString() + row.toString() });
+      return;
     }
 
-    if ( game.status === GameStatus.Player1Turn ) {
-        setGame((prev) => {
-            const newMoves = prev.moves + direction.toString() + row.toString() + "/"
-            return {
-                ...prev,
-                moves: newMoves,
-                status: GameStatus.Player2Turn
-            }
-        });
+    if (game.status === GameStatus.Player1Turn) {
+      setGame((prev) => {
+        const newMoves =
+          prev.moves + direction.toString() + row.toString() + "/";
+        return {
+          ...prev,
+          moves: newMoves,
+          status: GameStatus.Player2Turn,
+        };
+      });
     }
   };
 
   React.useEffect(() => {
-    if ( game.status === GameStatus.Player2Turn || game.status === GameStatus.Player1Turn ) {
+    if (
+      game.status === GameStatus.Player2Turn ||
+      game.status === GameStatus.Player1Turn
+    ) {
     }
-    if (isSoloGame ) {
-      boardRef.current.getMasterBoard()
-        .then((updatedBoard: CellState[][]) => {
-            const gameStatus = GameRules.getGameStatus(updatedBoard);
-            setGame((prev) => {
-                return { ...prev, status: gameStatus }
-            });
-            if ( ReadyStatuses.includes(gameStatus) ) return
-
-            if ( game.status === GameStatus.Player2Turn ) {
-                setTimeout(() => {
-                    const move = Smart.findMove(updatedBoard);
-                    makeMove(move.row, move.direction);
-                    setGame((prev) => {
-                        const newMoves = prev.moves + move.direction.toString() + move.row.toString() + "/"
-                        return {
-                            ...prev,
-                            moves: newMoves,
-                            status: GameStatus.Player1Turn
-                        }
-                    });
-                }, 0);
-            }
+    if (isSoloGame) {
+      boardRef.current.getMasterBoard().then((updatedBoard: CellState[][]) => {
+        const gameStatus = GameRules.getGameStatus(updatedBoard);
+        setGame((prev) => {
+          return { ...prev, status: gameStatus };
         });
+        if (ReadyStatuses.includes(gameStatus)) return;
+
+        if (game.status === GameStatus.Player2Turn) {
+          setTimeout(() => {
+            const move = Smart.findMove(updatedBoard);
+            makeMove(move.row, move.direction);
+            setGame((prev) => {
+              const newMoves =
+                prev.moves +
+                move.direction.toString() +
+                move.row.toString() +
+                "/";
+              return {
+                ...prev,
+                moves: newMoves,
+                status: GameStatus.Player1Turn,
+              };
+            });
+          }, 0);
+        }
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [game.status]);
-
 
   socket.on("error", (error: string) => {
     socket.disconnect();
@@ -125,26 +130,28 @@ function App() {
 
   return (
     <div className="App">
-      <div>{StatusMessages[game.status]} | {game.game_id} </div>
-      { isSoloGame && game.status === GameStatus.Player2Turn && (
-            <div>Thinking...</div>
+      <div>
+        {StatusMessages[game.status]} | {game.game_id}{" "}
+      </div>
+      {isSoloGame && game.status === GameStatus.Player2Turn && (
+        <div>Thinking...</div>
       )}
-      { !isSoloGame && (
+      {!isSoloGame && (
         <div>
-            <input
-                type="text"
-                value={fullname}
-                onChange={(e) => setFullname(e.target.value)}
-                className="input-basic"
-                placeholder="Fullname"
-            />
-            <input
-                type="number"
-                value={gameCode}
-                onChange={(e) => setGameCode(parseInt(e.target.value))}
-                className="input-basic"
-                placeholder="Game Code"
-            />
+          <input
+            type="text"
+            value={fullname}
+            onChange={(e) => setFullname(e.target.value)}
+            className="input-basic"
+            placeholder="Fullname"
+          />
+          <input
+            type="number"
+            value={gameCode}
+            onChange={(e) => setGameCode(parseInt(e.target.value))}
+            className="input-basic"
+            placeholder="Game Code"
+          />
           {ReadyStatuses.includes(game.status) && (
             <button className="cta" onClick={matchGame}>
               Join Game
@@ -158,10 +165,8 @@ function App() {
         </div>
       )}
 
-      { isSoloGame && (
-        <button onClick={() => stopSolo()}>Stop</button>
-      )}
-      { !isSoloGame && (
+      {isSoloGame && <button onClick={() => stopSolo()}>Stop</button>}
+      {!isSoloGame && (
         <button onClick={() => startSolo()}>Play Dumb Computer</button>
       )}
       <Board
